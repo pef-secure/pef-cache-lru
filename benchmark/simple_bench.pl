@@ -37,7 +37,7 @@ sub cache_set_hit {
 
 print "cache_hit:\n";
 cmpthese(
-	-2, {
+	5000, {
 		'Cache::LRU' => sub {
 			cache_hit(Cache::LRU->new(size => $size));
 		},
@@ -58,7 +58,7 @@ sub cache_set {
 }
 
 cmpthese(
-	-3, {
+	20, {
 		'Cache::LRU' => sub {
 			cache_set(Cache::LRU->new(size => $size));
 		},
@@ -70,7 +70,7 @@ cmpthese(
 
 print "\ncache_set_hit:\n";
 cmpthese(
-	-2, {
+	500, {
 		'Cache::LRU' => sub {
 			cache_set_hit(Cache::LRU->new(size => $size));
 		},
