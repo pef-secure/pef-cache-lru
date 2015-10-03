@@ -13,7 +13,7 @@ use constant {
 	MAXSIZE => 4,
 };
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 sub new {
 	my ($class, $max_size) = @_;
@@ -97,7 +97,9 @@ sub get {
 1;
 
 __END__
- 
+
+=encoding utf8
+
 =head1 NAME
  
 PEF::CacheLRU - a simple, fast implementation of LRU cache in pure perl
@@ -175,6 +177,27 @@ Using slightly modified benchmark from L<Cache::LRU> I get:
   Cache::LRU    155/s            --          -35%
   PEF::CacheLRU 238/s           54%            --
 
+Devel::NYTProf measures following speed:
+
+  spent 9.61s (8.97+637ms) within PEF::CacheLRU::get which was called 7500000 times, avg 1µs/call: 
+  5000000 times (5.36s+0s) by main::cache_hit at line 18 of simple_bench.pl, avg 1µs/call 
+  2500000 times (3.61s+637ms) by main::cache_set_hit at line 31 of simple_bench.pl, avg 2µs/call
+
+  spent 25.3s (17.8+7.48) within Cache::LRU::get which was called 7500000 times, avg 3µs/call: 
+  5000000 times (11.7s+4.91s) by main::cache_hit at line 18 of simple_bench.pl, avg 3µs/call 
+  2500000 times (6.16s+2.57s) by main::cache_set_hit at line 31 of simple_bench.pl, avg 3µs/call
+
+  spent 4.23s (4.23+2.36ms) within PEF::CacheLRU::set which was called 1320720 times, avg 3µs/call: 
+  1310720 times (4.21s+2.36ms) by main::cache_set at line 56 of simple_bench.pl, avg 3µs/call 
+     5000 times (13.0ms+0s) by main::cache_hit at line 16 of simple_bench.pl, avg 3µs/call 
+     5000 times (10.6ms+0s) by main::cache_set_hit at line 25 of simple_bench.pl, avg 2µs/call
+
+	
+  spent 9.46s (7.38+2.08) within Cache::LRU::set which was called 1320720 times, avg 7µs/call:
+  1310720 times (7.32s+2.06s) by main::cache_set at line 56 of simple_bench.pl, avg 7µs/call
+     5000 times (28.5ms+11.2ms) by main::cache_hit at line 16 of simple_bench.pl, avg 8µs/call
+     5000 times (24.9ms+9.10ms) by main::cache_set_hit at line 25 of simple_bench.pl, avg 7µs/call
+
 =head1 SEE ALSO
  
 L<Cache::LRU>
@@ -183,6 +206,6 @@ L<Cache::LRU>
  
 This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
  
-See <http://www.perlfoundation.org/artistic_license_2_0>
+See L<Artistic License 2.0|http://www.perlfoundation.org/artistic_license_2_0>
  
 =cut

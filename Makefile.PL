@@ -2,7 +2,7 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
 	NAME             => "PEF::CacheLRU",
 	AUTHOR           => "Pef Secure",
-	VERSION          => "0.01",
+	VERSION          => "0.02",
 	INSTALLDIRS      => 'site',
 	LICENSE          => "artistic_2",
 	MIN_PERL_VERSION => "5.014000",
